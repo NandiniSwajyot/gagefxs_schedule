@@ -167,7 +167,7 @@ const ChallanPDF = ({ challan }) => {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.logo}>🔧  GageTrack Pro</Text>
+            <Text style={styles.logo}>GageFx</Text>
             <Text style={{ fontSize: 9, color: '#6b7280' }}>Calibration Management System</Text>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
@@ -249,7 +249,7 @@ const ChallanPDF = ({ challan }) => {
 
         {/* Footer */}
         <Text style={styles.footer}>
-          Generated on {new Date().toLocaleString()} • GageTrack Pro v2.0 • 
+          Generated on {new Date().toLocaleString()} • GageFx Calibration Management System
           This is a system-generated document. No signature required.
         </Text>
       </Page>

@@ -144,6 +144,53 @@ const GageDrawer = ({
     }
   };
 
+  const handleRescheduleGage = async (gage) => {
+    try {
+
+      const { value: scheduledDate } = await Swal.fire({
+        title: "Reschedule Calibration",
+        input: "date",
+        inputLabel: "Select new calibration date",
+        showCancelButton: true,
+        confirmButtonText: "Reschedule",
+      });
+
+      if (!scheduledDate) return;
+
+      const response = await fetch(
+        `http://localhost:8080/api/calibration-manager/gages/${gage.id}/reschedule?scheduledDate=${scheduledDate}`,
+        {
+          method: "PUT",
+          headers: {
+            "User-ID": localStorage.getItem("userId") || "1",
+            "User-Email": localStorage.getItem("userEmail") || "system@company.com",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const message = await response.text();
+
+      Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+      });
+
+    } catch (error) {
+      console.error("Reschedule error:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: error.message || "Failed to reschedule calibration",
+        icon: "error",
+      });
+    }
+  };
+
   // Update the inward button click handler in the list view
   const handleInwardClick = (gage) => {
     setSelectedGageForInward(gage);
@@ -530,7 +577,7 @@ const GageDrawer = ({
     return titles[selectedFilter] || 'Calibration Instruments';
   };
 
-  // Helper: whether scheduling is allowed for a given gage or current filter
+  // Helper: whether scheduling is allowed for a given gage or current filter 
   const canSchedule = (gage) => {
     if (!gage) return false;
     if (selectedFilter === 'outFor') return false;
@@ -1205,16 +1252,76 @@ const GageDrawer = ({
                                   </button>
                                 ) : selectedFilter === 'scheduled' ? (
                                   // Show Send Gauge button for scheduled items
-                                  <button
-                                    title="Send Gauge"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleSendGauge?.(g);
-                                    }}
-                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                  >
-                                    Send Gauge
-                                  </button>
+
+                                  // <button
+                                  //   title="Send Gauge"
+                                  //   onClick={(e) => {
+                                  //     e.stopPropagation();
+                                  //     handleRescheduleGage?.(g);
+                                  //   }}
+                                  //   className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  // >
+                                  //   Reschedule Gage
+                                  // </button>
+                                  // <button
+                                  //   title="Send Gauge"
+                                  //   onClick={(e) => {
+                                  //     e.stopPropagation();
+                                  //     handleSendGauge?.(g);
+                                  //   }}
+                                  //   className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  // >
+                                  //   Send Gauge
+                                  // </button>
+
+                                  <div className="flex items-center gap-2">
+
+                                    {/* Reschedule Gage */}
+                                    <button
+                                      title="Reschedule Gage"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleRescheduleGage?.(g);
+                                      }}
+                                      className="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                                    >
+                                      Reschedule Gage
+                                    </button>
+
+                                    {/* Send Gauge */}
+                                    <button
+                                      title="Send Gauge"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSendGauge?.(g);
+                                      }}
+                                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                    >
+                                      Send Gauge
+                                    </button>
+
+                                  </div>
+
+                                  // <div className="flex gap-2">
+
+                                  //   {/* Reschedule Button */}
+                                  //   <button
+                                  //     onClick={() => handleRescheduleGage(gage)}
+                                  //     className="flex items-center gap-2 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                                  //   >
+                                  //     <Calendar className="h-4 w-4" />
+                                  //     Reschedule Gage
+                                  //   </button>
+
+                                  //   {/* Send Gauge Button */}
+                                  //   <button
+                                  //     onClick={() => handleSendGauge(gage)}
+                                  //     className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                                  //   >
+                                  //     Send Gauge
+                                  //   </button>
+
+                                  // </div>
                                 ) : (
                                   // Show regular Schedule/Complete buttons for other views
                                   <>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Lottie from 'lottie-react';
@@ -7,13 +6,14 @@ import Lottie from 'lottie-react';
 import InventoryManagerAnim from '../../assets/InventoryManager.json';
 import CalibrationManagerAnim from '../../assets/CalibrationManager.json';
 import Invoice from '../../assets/register.json';
+import Revenue from '../../assets/Revenue (1).json'; // Capital R
 
 const DashboardCard = ({ title, description, to, animation, gradient }) => {
     return (
         <Link to={to} className="block h-full no-underline group">
             <div
                 className="
-          h-full rounded-2xl overflow-hidden
+          h-full rounded-2xl overflow-hidden 
           bg-white
           border border-gray-200
           shadow-md transition-all duration-300
@@ -30,8 +30,8 @@ const DashboardCard = ({ title, description, to, animation, gradient }) => {
                 >
                     <Lottie
                         animationData={animation}
-                        loop
-                        autoplay
+                        loop={true}
+                        autoplay={true}
                         className="w-65 h-60"
                     />
                 </div>
@@ -66,15 +66,15 @@ const ACCMANAGERDashboard = () => {
             description:
                 'Create, track, and manage challans efficiently with complete visibility and control.',
             to: '/admin/challan',
-            animation: Invoice,
+            animation: Invoice, // Using Revenue animation
             gradient: 'bg-gradient-to-br from-indigo-50 via-white to-indigo-100',
         },
         {
             title: 'Gage Management',
             description:
-                'Manage gages, track lifecycle status, and ensure proper monitoring across plants.',
+                'Manage gage costs, track lifecycle status, and ensure proper monitoring across plants.',
             to: '/admin/gageprices',
-            animation: InventoryManagerAnim,
+           animation: Revenue,
             gradient: 'bg-gradient-to-br from-blue-50 via-white to-blue-100',
         },
     ];

@@ -141,8 +141,8 @@ export default function Login() {
                 <option value="OPERATOR">Operator</option>
                 <option value="PLANT_HOD">Plant HOD</option> */}
                 <option value="CALIBRATION_MANAGER">Plant Head</option>
-                {/* <option value="USER">User</option>
-                <option value="MANAGER">Manager</option> */}
+                {/* <option value="USER">User</option> */}
+                <option value="MANAGER">Account Manager</option>
               </select>
               {errors.selectedField && (
                 <p className="text-red-500 text-xs mt-1">{errors.selectedField.message}</p>
